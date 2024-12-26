@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Aplicación Electron</title>
+  <link href="dist/styles.css" rel="stylesheet">
+</head>
+
+<body class="p-5 flex flex-col gap-4">
+
+  <section class="flex flex-col gap-4">
+    <h1 class="text-2xl font-bold">Crear contrato principal: </h1>
+
+    <div class="flex gap-4">
+      <button id="addMandataria"
+        class="btn rounded bg-green-500 w-fit text-white font-bold py-2 px-4 active:scale-95 transition disabled:bg-gray-300"
+        aria-label="Crear Mandataria Paracelso">Crear Mandataria "Paracelso"</button>
+      <button id="addEntidad"
+        class="btn rounded bg-green-500 w-fit text-white font-bold py-2 px-4 active:scale-95 transition disabled:bg-gray-300"
+        disabled aria-label="Agregar Entidad Medicos Paracelso">Agregar Entidad "Medicos Paracelso"</button>
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h1 class="text-2xl font-bold">Agregar médico: </h1>
+    <input class="border outline-none px-4 py-2 focus:border-green-500 disabled:border-red-500" autofocus type="text" id="medicoNombre" placeholder="Nombre del Médico" />
+    <button id="addMedico" class="btn rounded bg-green-500 w-fit text-white font-bold py-2 px-4 active:scale-95 transition disabled:bg-gray-300" disabled aria-label="Agregar Médico">Agregar Médico</button>
+  </section>
+  
+
+  <div id="modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center z-50">
+    <div class="bg-white p-5 rounded shadow-lg">
+      <p id="modalMessage" class="text-lg"></p>
+      <div class="flex justify-end">
+        <button id="closeModal" class="mt-4 bg-red-600 text-white px-4 py-1 rounded font-bold">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+
+</html>
