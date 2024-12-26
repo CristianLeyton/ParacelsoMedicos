@@ -83,11 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addMedico = () => {
     const medicoNombre = medicoNombreInput.value.trim();
-    medicoNombre = medicoNombre.toUpperCase();
+
     if (medicoNombre) {
       ipcRenderer.invoke('add-medico', medicoNombre).then((success) => {
         if (success) {
-          showModal(`Médico "${medicoNombre}" agregado con éxito.`);
+          showModal(`Médico "${medicoNombre.toUpperCase()}" agregado con éxito.`);
           medicoNombreInput.value = '';
         } else {
           showModal('No se pudo agregar el médico. Verifique que no exista otro médico con el mismo nombre.');
