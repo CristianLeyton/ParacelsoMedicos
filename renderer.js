@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    // Cerrar modal con Enter o Escape
+    // Cerrar modal con Escape
     document.addEventListener('keydown', handleKeyPress);
   };
   
@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addMedico = () => {
     const medicoNombre = medicoNombreInput.value.trim();
+    medicoNombre = medicoNombre.toUpperCase();
     if (medicoNombre) {
       ipcRenderer.invoke('add-medico', medicoNombre).then((success) => {
         if (success) {

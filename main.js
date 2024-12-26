@@ -1,10 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const Firebird = require('node-firebird');
 
- require('electron-reload')(path.join(__dirname, 'dist'), {
-  electron: require(`${__dirname}/node_modules/electron`)
-}); 
 
 // Configuración de Firebird
 const dbOptions = {
@@ -18,6 +14,7 @@ const dbOptions = {
   pageSize: 4096
 };
 
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
@@ -28,6 +25,31 @@ function createWindow() {
     },
   });
 
+  // Crear el menú personalizado
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'Archivo',
+      submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R', // Puedes cambiar el atajo de teclado si lo deseas
+          click: () => {
+            win.reload();
+          },
+        },
+        {
+          label: 'Exit',
+          accelerator: 'CmdOrCtrl+Q', // Puedes cambiar el atajo de teclado si lo deseas
+          click: () => {
+            app.quit();
+          },
+        },
+      ],
+    },
+  ]);
+
+  // Cambiar el menú superior
+  win.setMenu(menu);
   win.loadFile('index.html');
 }
 
@@ -117,7 +139,11 @@ ipcMain.handle('add-entidad', async () => {
   });
 });
 
+
+
 ipcMain.handle('add-medico', async (event, medicoNombre) => {
+
+  medicoNombre = medicoNombre.toUpperCase();
   return new Promise((resolve, reject) => {
     const checkMedicoQuery = `SELECT COUNT(*) FROM CO_MAESTRO WHERE DESCRIPCION = ?`;
     executeQuery(checkMedicoQuery, [medicoNombre], (result) => {

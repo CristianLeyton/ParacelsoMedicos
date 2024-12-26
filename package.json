@@ -6,15 +6,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
-    "dev": "concurrently \"npm run build:css\" \"npm start\""
+    "dev": "concurrently \"npm run build:css\" \"npm start\"",
+    "build": "electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cristian Leyton",
   "license": "ISC",
-  "description": "",
+  "description": "Poder crear contratos en el Winfarma",
   "devDependencies": {
     "concurrently": "^9.1.0",
     "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
@@ -22,5 +24,22 @@
     "node-firebird": "^1.1.9",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
+  },
+  "build": {
+    "appId": "com.medicosparacelso.id",
+    "productName": "Medicos Paracelso",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "renderer.js",
+      "dist/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "sign": false
+    }
   }
 }
