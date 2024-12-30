@@ -141,8 +141,7 @@ ipcMain.handle('add-entidad', async () => {
 
 
 
-ipcMain.handle('add-medico', async (event, medicoNombre) => {
-
+ipcMain.handle('add-medico', async (event, medicoNombre, porcentajePorDefecto) => {
   medicoNombre = medicoNombre.toUpperCase();
   return new Promise((resolve, reject) => {
     const checkMedicoQuery = `SELECT COUNT(*) FROM CO_MAESTRO WHERE DESCRIPCION = ?`;
@@ -162,9 +161,9 @@ ipcMain.handle('add-medico', async (event, medicoNombre) => {
                   // Ejecutar consultas adicionales
                   const insertDetalleQuery = `
                     INSERT INTO CO_DETALLE (CONTRATO, ENTIDAD, DESCRIPCION, CUBREVENTALIBRE, PORCENTAJEPORDEFECTO, RENGLONESCUBIERTOS, DIASVALIDEZRECETA, IDENTIDAD, FLAGS, CANTIDADTOTALPRODUCTOS)
-                    VALUES ((SELECT ID FROM CO_MAESTRO WHERE DESCRIPCION = ?), 1, ?, 'S', 30, 10, 30, (SELECT ID FROM ENTIDADES WHERE DESCRIPCION = 'MEDICOS PARACELSO'), 4, 0)
+                    VALUES ((SELECT ID FROM CO_MAESTRO WHERE DESCRIPCION = ?), 1, ?, 'S', ?, 10, 30, (SELECT ID FROM ENTIDADES WHERE DESCRIPCION = 'MEDICOS PARACELSO'), 4, 0)
                   `;
-                  executeQuery(insertDetalleQuery, [medicoNombre, medicoNombre], () => {
+                  executeQuery(insertDetalleQuery, [medicoNombre, medicoNombre, porcentajePorDefecto], () => {
                     const insertControlCantidadesQuery = `
                       INSERT INTO CO_CONTROLCANTIDADES (CONTRATO, ENTIDAD, CONTROLCANTIDAD, CANTIDADPORRENGLON, CANTIDADPORRECETA, CANTIDADPROLONGADO)
                       SELECT 
@@ -213,4 +212,4 @@ ipcMain.handle('add-medico', async (event, medicoNombre) => {
       }
     });
   });
-});
+})

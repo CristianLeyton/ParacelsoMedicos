@@ -25,7 +25,10 @@
 
   <section class="flex flex-col gap-4">
     <h1 class="text-2xl font-bold">Agregar médico: </h1>
-    <input class="border outline-none px-4 py-2 focus:border-green-500 disabled:border-red-500" autofocus type="text" id="medicoNombre" placeholder="Nombre del Médico" />
+    <span>Nombre:</span>
+    <input class="border outline-none px-4 py-2 focus:border-green-500 disabled:border-red-500" autofocus type="text" id="medicoNombre" placeholder="Ej: Juan Perez"/>
+    <span>Cobertura (%):</span>
+    <input class="border outline-none px-4 py-2 focus:border-green-500" type="number" id="porcentajePorDefecto" placeholder="Porcentaje por Defecto" value="0.001" min="0" max="100" step="0.001" />
     <button id="addMedico" class="btn rounded bg-green-500 w-fit text-white font-bold py-2 px-4 active:scale-95 transition disabled:bg-gray-300" disabled aria-label="Agregar Médico">Agregar Médico</button>
   </section>
   

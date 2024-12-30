@@ -83,21 +83,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addMedico = () => {
     const medicoNombre = medicoNombreInput.value.trim();
-
-    if (medicoNombre) {
-      ipcRenderer.invoke('add-medico', medicoNombre).then((success) => {
-        if (success) {
-          showModal(`Médico "${medicoNombre.toUpperCase()}" agregado con éxito.`);
-          medicoNombreInput.value = '';
-        } else {
-          showModal('No se pudo agregar el médico. Verifique que no exista otro médico con el mismo nombre.');
-        }
-      }).catch((error) => {
-        console.error('Error al agregar médico:', error);
-      });
-    } else {
+    const porcentajePorDefectoInput = document.getElementById('porcentajePorDefecto');
+    let porcentajePorDefecto = parseFloat(porcentajePorDefectoInput.value);
+  
+    // Validar el nombre del médico
+    if (!medicoNombre) {
       showModal('Por favor, ingrese un nombre para el médico.');
+      return;
     }
+  
+    // Validar el porcentaje por defecto
+    if (isNaN(porcentajePorDefecto) || porcentajePorDefecto < 0 || porcentajePorDefecto > 100) {
+      showModal('Por favor, ingrese un porcentaje válido entre 0 y 100.');
+      return;
+    }
+  
+    ipcRenderer.invoke('add-medico', medicoNombre, porcentajePorDefecto).then((success) => {
+      if (success) {
+        showModal(`Médico "${medicoNombre.toUpperCase()}" agregado con éxito con un porcentaje de cobertura de ${porcentajePorDefecto}.`);
+        medicoNombreInput.value = '';
+        //porcentajePorDefectoInput.value = '0.001'; // Resetear el valor por defecto
+      } else {
+        showModal('No se pudo agregar el médico. Verifique que no exista otro médico con el mismo nombre.');
+      }
+    }).catch((error) => {
+      console.error('Error al agregar médico:', error);
+    });
   };
 
   addMedicoButton.addEventListener('click', addMedico);
